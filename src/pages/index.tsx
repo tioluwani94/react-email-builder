@@ -94,8 +94,14 @@ export default function Home() {
             </Box>
           </Header>
           <Content>
-            <Box mx="auto">
-              <Frame ref={iframeRef}>
+            <Box h="100%" mx="auto">
+              <Frame
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                ref={iframeRef}
+              >
                 <FrameProvider>
                   <Html>
                     <Head>

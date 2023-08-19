@@ -1,14 +1,14 @@
-import {
-  Button,
-  Column,
-  Heading,
-  Container,
-  Img,
-  Hr,
-  Link,
-  Section,
-  Text,
-} from "@react-email/components";
+import { Button } from "@/components/ui";
+// import {
+//   Column,
+//   Heading,
+//   Container,
+//   Img,
+//   Hr,
+//   Link,
+//   Section,
+//   Text,
+// } from "@react-email/components";
 
 export const Components: {
   [key: string]: { comp: any; props: any; children: any };
