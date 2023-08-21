@@ -37,8 +37,6 @@ export default function Home() {
   const [emailTitle, setEmailTitle] = useState("Email title");
   const [view, setView] = useState<"preview" | "source">("preview");
 
-  const iframeRef = useRef(null);
-
   const handleAddComponentToTree = (component: string) => {
     setTree([...tree, { component, _uid: uuidV4() }]);
   };
@@ -100,7 +98,6 @@ export default function Home() {
                   width: "100%",
                   height: "100%",
                 }}
-                ref={iframeRef}
               >
                 <FrameProvider>
                   <Html>
