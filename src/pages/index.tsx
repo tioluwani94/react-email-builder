@@ -86,7 +86,7 @@ export default function Home() {
                       backgroundColor: "#ffffff",
                     }}
                   >
-                    {state.tree?.map((block) => {
+                    {state.tree?.map((block: any) => {
                       return generateComponent(block);
                     })}
                   </Container>
