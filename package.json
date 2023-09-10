@@ -25,10 +25,12 @@
     "react-dom": "18.2.0",
     "react-email": "^1.9.4",
     "react-frame-component": "^5.2.6",
+    "react-icons": "^4.11.0",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/react-icons": "^3.0.0",
     "@types/uuid": "^9.0.2"
   }
 }

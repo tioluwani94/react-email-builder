@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui";
+import { CompType } from "@/types";
 // import {
 //   Column,
 //   Heading,
@@ -10,14 +11,24 @@ import { Button } from "@/components/ui";
 //   Text,
 // } from "@react-email/components";
 
-export const Components: {
-  [key: string]: { comp: any; props: any; children: any };
-} = {
+export const Components: CompType = {
   button: {
     comp: Button,
     props: {
-      href: "",
-      target: "",
+      layoutProps: {
+        textAlign: "center",
+      },
+      buttonProps: {
+        href: "",
+        target: "",
+        pY: 10,
+        pX: 20,
+        style: {
+          borderRadius: "4px",
+          backgroundColor: "teal",
+          color: "white",
+        },
+      },
     },
     children: ["Button"],
   },

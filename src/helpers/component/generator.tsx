@@ -11,7 +11,9 @@ export const generateComponent = (block: {
     return createElement(
       comp,
       {
+        _uid,
         key: _uid,
+        type: component,
         ...props,
       },
       ...children

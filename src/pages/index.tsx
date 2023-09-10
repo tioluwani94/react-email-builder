@@ -1,45 +1,34 @@
+import { NavComponentsList } from "@/components/builder/components-list";
+import { BuilderEditor } from "@/components/builder/editor";
 import {
   Content,
   Header,
   Main,
-  OptionButton,
   SideNav,
   ViewSwitcher,
 } from "@/components/layout";
-import { FrameProvider } from "@/components/layout/frame-provider";
 import { generateComponent } from "@/helpers/component";
-import { components } from "@/helpers/ui";
+import { useEditorReducer } from "@/helpers/reducer";
 import {
   Box,
   Heading as ChakraHeading,
-  Text as ChakraText,
   Editable,
   EditableInput,
   EditablePreview,
   Flex,
-  SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
-import { Body, Head, Html } from "@react-email/components";
+import { Body, Container, Head, Html } from "@react-email/components";
 import NextHead from "next/head";
-import { useRef, useState } from "react";
-import Frame from "react-frame-component";
-import { v4 as uuidV4 } from "uuid";
+import { useState } from "react";
 
 export default function Home() {
-  const [tree, setTree] = useState<
-    {
-      _uid: string;
-      component: string;
-    }[]
-  >([]);
-  // const [tree, setTree] = useState(new Map());
   const [emailTitle, setEmailTitle] = useState("Email title");
   const [view, setView] = useState<"preview" | "source">("preview");
 
-  const handleAddComponentToTree = (component: string) => {
-    setTree([...tree, { component, _uid: uuidV4() }]);
-  };
+  const { state } = useEditorReducer();
+
+  console.log(state);
 
   return (
     <>
@@ -57,21 +46,7 @@ export default function Home() {
             </ChakraHeading>
           </Flex>
           <Stack as="nav" spacing={4}>
-            <SimpleGrid columns={[1, 1, 2, 2]} gap={2}>
-              {Object.keys(components).map((c) => (
-                <OptionButton
-                  key={c}
-                  onClick={() =>
-                    handleAddComponentToTree(components[c].componentKey)
-                  }
-                >
-                  {components[c].icon}
-                  <ChakraText mt={1} fontSize="0.75rem">
-                    {components[c].label}
-                  </ChakraText>
-                </OptionButton>
-              ))}
-            </SimpleGrid>
+            {state.componentToEdit ? <BuilderEditor /> : <NavComponentsList />}
           </Stack>
         </SideNav>
         <Main>
@@ -93,28 +68,30 @@ export default function Home() {
           </Header>
           <Content>
             <Box h="100%" mx="auto">
-              <Frame
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <FrameProvider>
-                  <Html>
-                    <Head>
-                      <title>{emailTitle}</title>
-                    </Head>
-                    <Body
-                      style={{
-                        backgroundColor: "#ffffff",
-                        fontFamily: "HelveticaNeue,Helvetica,Arial,sans-serif",
-                      }}
-                    >
-                      {tree.map((block) => generateComponent(block))}
-                    </Body>
-                  </Html>
-                </FrameProvider>
-              </Frame>
+              <Html>
+                <Head>
+                  <title>{emailTitle}</title>
+                </Head>
+                <Body
+                  style={{
+                    backgroundColor: "#f6f9fc",
+                    fontFamily: "HelveticaNeue,Helvetica,Arial,sans-serif",
+                  }}
+                >
+                  <Container
+                    style={{
+                      margin: "0 auto",
+                      marginBottom: "64px",
+                      padding: "20px 0 48px",
+                      backgroundColor: "#ffffff",
+                    }}
+                  >
+                    {state.tree?.map((block) => {
+                      return generateComponent(block);
+                    })}
+                  </Container>
+                </Body>
+              </Html>
             </Box>
           </Content>
         </Main>
