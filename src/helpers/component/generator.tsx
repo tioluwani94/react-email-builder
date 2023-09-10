@@ -2,12 +2,14 @@ import { createElement } from "react";
 import { Components } from "./register";
 
 export const generateComponent = (block: {
+  comp: any;
+  props: any;
   _uid: string;
+  children: any;
   component: string;
 }) => {
-  const { _uid, component } = block;
+  const { _uid, component, comp, props, children } = block;
   if (typeof Components[component] !== "undefined") {
-    const { comp, props, children } = Components[component];
     return createElement(
       comp,
       {

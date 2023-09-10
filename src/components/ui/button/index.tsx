@@ -10,10 +10,10 @@ import { useMemo, CSSProperties } from "react";
 
 export const Button = (props: any) => {
   const { state, setComponentToEdit } = useEditorReducer();
-  const { _uid, children, buttonProps, layoutProps, key } = props;
+  const { _uid, children, buttonProps, layoutProps, ...rest } = props;
 
   const rowStyle: CSSProperties = useMemo(() => {
-    const isSelected = state.componentToEdit?.component?._uid === _uid;
+    const isSelected = state.componentToEdit?._uid === _uid;
     if (isSelected) {
       return {
         borderWidth: "2px",
@@ -24,9 +24,9 @@ export const Button = (props: any) => {
   }, [_uid, state.componentToEdit]);
 
   return (
-    <Section>
-      <Row key={key} style={rowStyle} onClick={() => setComponentToEdit(_uid)}>
-        <Column style={{ padding: "10px", ...layoutProps }}>
+    <Section {...rest}>
+      <Row style={rowStyle} onClick={() => setComponentToEdit(_uid)}>
+        <Column style={layoutProps}>
           <REButton {...buttonProps}>{children}</REButton>
         </Column>
       </Row>

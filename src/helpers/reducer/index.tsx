@@ -6,19 +6,28 @@ import {
   useMemo,
   useReducer,
 } from "react";
-import { v4 as uuidV4 } from "uuid";
 
 const EditorContext = createContext<any>(null);
 
 const editorReducer = (state: ReducerState, action: ReducerAction) => {
   const { type, payload } = action;
   switch (type) {
-    case ReducerKind.ADD_COMPONENT_TO_TREE:
+    case ReducerKind.ADD_COMPONENT:
       return {
         ...state,
-        tree: [...(state.tree ?? []), { ...payload, _uid: uuidV4() }],
+        tree: [...(state.tree ?? []), payload],
       };
-    case ReducerKind.REMOVE_COMPONENT_FROM_TREE:
+    case ReducerKind.UPDATE_COMPONENT:
+      const newTree = state.tree ?? [];
+      const componentIndex = newTree?.findIndex(
+        (t) => t._uid == payload.component._uid
+      );
+      newTree[componentIndex] = payload.component;
+      return {
+        ...state,
+        tree: newTree,
+      };
+    case ReducerKind.REMOVE_COMPONENT:
       return {
         ...state,
         tree: state.tree?.filter((i) => i._uid !== payload._uid),
@@ -61,11 +70,17 @@ export const useEditorReducer = () => {
   }
   const [state, dispatch] = context;
 
-  const addComponentToTree = (component: string) => {
-    console.log(component);
+  const addComponentToTree = (payload: any) => {
     dispatch({
-      payload: { component },
-      type: ReducerKind.ADD_COMPONENT_TO_TREE,
+      payload,
+      type: ReducerKind.ADD_COMPONENT,
+    });
+  };
+
+  const updateComponent = (payload: any) => {
+    dispatch({
+      payload,
+      type: ReducerKind.UPDATE_COMPONENT,
     });
   };
 
@@ -82,7 +97,7 @@ export const useEditorReducer = () => {
 
   const removeComponentFromTree = (_uid: string) => {
     dispatch({
-      type: ReducerKind.REMOVE_COMPONENT_FROM_TREE,
+      type: ReducerKind.REMOVE_COMPONENT,
       payload: { _uid },
     });
   };
@@ -91,6 +106,7 @@ export const useEditorReducer = () => {
     state,
     dispatch,
     closeEditor,
+    updateComponent,
     setComponentToEdit,
     addComponentToTree,
     removeComponentFromTree,

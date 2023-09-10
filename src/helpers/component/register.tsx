@@ -17,10 +17,14 @@ export const Components: CompType = {
     props: {
       layoutProps: {
         textAlign: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
       },
       buttonProps: {
         href: "",
-        target: "",
+        target: "_blank",
         pY: 10,
         pX: 20,
         style: {

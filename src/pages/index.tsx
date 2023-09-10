@@ -40,12 +40,12 @@ export default function Home() {
       </NextHead>
       <Stack h="100vh" spacing="0" direction="row">
         <SideNav>
-          <Flex h="70px" alignItems="center">
+          <Flex px={6} h="70px" alignItems="center">
             <ChakraHeading size="sm" color="white">
               react email builder
             </ChakraHeading>
           </Flex>
-          <Stack as="nav" spacing={4}>
+          <Stack flex={1} as="nav" spacing={4} overflowY="auto">
             {state.componentToEdit ? <BuilderEditor /> : <NavComponentsList />}
           </Stack>
         </SideNav>

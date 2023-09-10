@@ -3,9 +3,9 @@ import { Stack, StackProps } from "@chakra-ui/react";
 export const SideNav = (props: StackProps) => {
   return (
     <Stack
-      px={6}
+      h="100%"
       as="aside"
-      spacing={4}
+      spacing={0}
       bg="#000000"
       minW="275px"
       maxW="275px"
